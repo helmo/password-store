@@ -367,7 +367,7 @@ cmd_init() {
 
 cmd_show() {
 	local opts selected_line clip=0 qrcode=0 subkey=0
-	opts="$($GETOPT -o q::c:: -l qrcode::,clip::,subkey: -n "$PROGRAM" -- "$@")"
+	opts="$($GETOPT -o q::c::s:: -l qrcode::,clip::,subkey: -n "$PROGRAM" -- "$@")"
 	local err=$?
 	eval set -- "$opts"
 	while true; do case $1 in
