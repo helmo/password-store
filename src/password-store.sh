@@ -373,7 +373,7 @@ cmd_show() {
 	while true; do case $1 in
 		-q|--qrcode) qrcode=1; selected_line="${2:-1}"; shift 2 ;;
 		-c|--clip) clip=1; selected_line="${2:-1}"; shift 2 ;;
-		-s|--subkey) subkey=1; selected_line="${2:-1}"; shift 2 ;;
+		-s|--subkey) subkey=1; subkey_name="${2:-1}"; shift 2 ;;
 		--) shift; break ;;
 	esac done
 
@@ -388,7 +388,13 @@ cmd_show() {
 			pass="$($GPG -d "${GPG_OPTS[@]}" "$passfile" | $BASE64)" || exit $?
 			echo "$pass" | $BASE64 -d
 		elif [[ $subkey -eq 1 ]]; then
-			pass="$($GPG -d "${GPG_OPTS[@]}" "$passfile" | tail -n +3 | egrep "^$selected_line:" | awk -F: '{gsub(/^[ \t]+/, "", $2); print $2}' )" || exit $?
+
+			pass="$($GPG -d "${GPG_OPTS[@]}" "$passfile" | tail -n +3 | egrep "^$subkey_name:" | awk -F: '{gsub(/^[ \t]+/, "", $2); print $2}' )" || exit $?
+			# Handle multi line content.
+			if [ "$pass" == "|" ]; then
+				# look for the subkey content with sed, first match the subkey_name:, then remove the non-indented lines, then remove the indents
+				pass="$($GPG -d "${GPG_OPTS[@]}" "$passfile" | tail -n +3 | sed -e "/^$subkey_name:/,/^[^ ]/!d" -e '/^[^ ]/d' -e "s/^ *//")"
+			fi
 			echo "$pass"
 		else
 			[[ $selected_line =~ ^[0-9]+$ ]] || die "Clip location '$selected_line' is not a number."
