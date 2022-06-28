@@ -104,6 +104,7 @@ complete -c $PROG -f -n '__fish_pass_needs_command' -a "(__fish_pass_print_entri
 complete -c $PROG -f -n '__fish_pass_uses_command -c' -a "(__fish_pass_print_entries)"
 complete -c $PROG -f -n '__fish_pass_uses_command --clip' -a "(__fish_pass_print_entries)"
 
+complete -c $PROG -f -n '__fish_pass_needs_command' -a log -d 'Command: Show the Git history for pass-name.'
 complete -c $PROG -f -n '__fish_pass_needs_command' -a git -d 'Command: execute a git command'
 complete -c $PROG -f -n '__fish_pass_uses_command git' -a '(__fish_pass_git_complete)'
 complete -c $PROG -f -n '__fish_pass_needs_command' -a find -d 'Command: find a password file or directory matching pattern'

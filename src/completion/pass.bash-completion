@@ -120,6 +120,10 @@ _pass()
 				COMPREPLY+=($(compgen -W "-r --recursive -f --force" -- ${cur}))
 				_pass_complete_entries
 				;;
+			log|-*)
+				COMPREPLY+=($(compgen -W "" -- ${cur}))
+				_pass_complete_entries 1
+				;;
 			git)
 				COMPREPLY+=($(compgen -W "init push pull config log reflog rebase" -- ${cur}))
 				;;

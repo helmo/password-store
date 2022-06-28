@@ -72,6 +72,9 @@ _pass () {
 					"--recursive[recursively delete]"
 					_pass_complete_entries_with_subdirs
 				;;
+			log)
+					_pass_complete_entries_with_subdirs
+				;;
 			git)
 				local -a subcommands
 				subcommands=(
@@ -102,6 +105,7 @@ _pass () {
 			"mv:Rename the password"
 			"cp:Copy the password"
 			"rm:Remove the password"
+			"log:Show the Git history for pass-name."
 			"git:Call git on the password store"
 			"version:Output version information"
 			"help:Output help message"
