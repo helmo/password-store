@@ -306,6 +306,8 @@ cmd_usage() {
 	        Renames or moves old-path to new-path, optionally forcefully, selectively reencrypting.
 	    $PROGRAM cp [--force,-f] old-path new-path
 	        Copies old-path to new-path, optionally forcefully, selectively reencrypting.
+	    $PROGRAM log pass-name
+	        Show the Git history for pass-name.
 	    $PROGRAM git git-command-args...
 	        If the password store is a git repository, execute a git command
 	        specified by git-command-args.
@@ -715,6 +717,7 @@ case "$1" in
 	delete|rm|remove) shift;	cmd_delete "$@" ;;
 	rename|mv) shift;		cmd_copy_move "move" "$@" ;;
 	copy|cp) shift;			cmd_copy_move "copy" "$@" ;;
+	log) shift;			cmd_git log "$@.gpg" ;;
 	git) shift;			cmd_git "$@" ;;
 	*)				cmd_extension_or_show "$@" ;;
 esac
